@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/feature_vector.schema.json",
+  "title": "Feature Extraction Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mouse_features",
+    "keystroke_features",
+    "scroll_features",
+    "feature_vector"
+  ],
+  "properties": {
+    "mouse_features": {
+      "type": "object",
+      "description": "Mouse-derived features for the current window.",
+      "additionalProperties": { "type": "number" }
+    },
+    "keystroke_features": {
+      "type": "object",
+      "description": "Keystroke-derived features for the current window.",
+      "additionalProperties": { "type": "number" }
+    },
+    "scroll_features": {
+      "type": "object",
+      "description": "Scroll-derived features for the current window.",
+      "additionalProperties": { "type": "number" }
+    },
+    "feature_vector": {
+      "type": "object",
+      "description": "Combined features (merged set) used as model input.",
+      "additionalProperties": { "type": "number" }
+    },
+    "meta": {
+      "type": "object",
+      "description": "Optional metadata (not used for model input).",
+      "additionalProperties": false,
+      "properties": {
+        "extractor_version": { "type": "string" },
+        "feature_set_version": { "type": "string" }
+      }
+    }
+  }
+}
