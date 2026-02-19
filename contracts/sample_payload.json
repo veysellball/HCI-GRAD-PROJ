@@ -1,0 +1,30 @@
+{
+  "session_id": "7c7f0f2a-2b0f-4fb8-a3fd-1f0b47a3b1d2",
+  "task_id": "b2b8b6a1-6f8b-4f17-8f1c-8c3f5a6c2d10",
+  "window_idx": 0,
+  "window_start_rel_ms": 0,
+  "window_end_rel_ms": 5000,
+  "events": {
+    "mouse": [
+      { "t_rel_ms": 12, "x": 412, "y": 302, "type": "move" },
+      { "t_rel_ms": 180, "x": 430, "y": 310, "type": "move" },
+      { "t_rel_ms": 620, "x": 430, "y": 310, "type": "down", "button": 0 },
+      { "t_rel_ms": 760, "x": 431, "y": 311, "type": "up", "button": 0 }
+    ],
+    "key": [
+      { "t_rel_ms": 910, "key": "H", "code": "KeyH", "action": "down" },
+      { "t_rel_ms": 980, "key": "H", "code": "KeyH", "action": "up" },
+      { "t_rel_ms": 1020, "key": "i", "code": "KeyI", "action": "down" },
+      { "t_rel_ms": 1085, "key": "i", "code": "KeyI", "action": "up" }
+    ],
+    "scroll": [
+      { "t_rel_ms": 2100, "deltaY": 120 },
+      { "t_rel_ms": 2600, "deltaY": -80 }
+    ]
+  },
+  "client": {
+    "user_agent": "Mozilla/5.0",
+    "viewport": { "width": 1280, "height": 720 },
+    "device_pixel_ratio": 2
+  }
+}

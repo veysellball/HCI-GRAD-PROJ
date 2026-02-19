@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/interaction.schema.json",
+  "title": "Interaction Window Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "session_id",
+    "task_id",
+    "window_idx",
+    "window_start_rel_ms",
+    "window_end_rel_ms",
+    "events"
+  ],
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "task_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "window_idx": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "window_start_rel_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "window_end_rel_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "events": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mouse": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["t_rel_ms", "x", "y", "type"],
+            "properties": {
+              "t_rel_ms": { "type": "integer", "minimum": 0 },
+              "x": { "type": "integer", "minimum": 0 },
+              "y": { "type": "integer", "minimum": 0 },
+              "type": {
+                "type": "string",
+                "enum": ["move", "down", "up"]
+              },
+              "button": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "key": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["t_rel_ms", "key", "code", "action"],
+            "properties": {
+              "t_rel_ms": { "type": "integer", "minimum": 0 },
+              "key": { "type": "string", "minLength": 1 },
+              "code": { "type": "string", "minLength": 1 },
+              "action": {
+                "type": "string",
+                "enum": ["down", "up"]
+              }
+            }
+          }
+        },
+        "scroll": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["t_rel_ms", "deltaY"],
+            "properties": {
+              "t_rel_ms": { "type": "integer", "minimum": 0 },
+              "deltaY": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "required": ["mouse", "key", "scroll"]
+    },
+    "client": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user_agent": { "type": "string" },
+        "viewport": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["width", "height"],
+          "properties": {
+            "width": { "type": "integer", "minimum": 1 },
+            "height": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "device_pixel_ratio": { "type": "number", "minimum": 0.1 }
+      }
+    }
+  }
+}
