@@ -1,110 +1,69 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/interaction.schema.json",
-  "title": "Interaction Window Payload",
+  "$id": "https://example.com/schemas/feature_vector.schema.json",
+  "title": "Feature Extraction Output",
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "schema_version",
     "session_id",
     "task_id",
     "window_idx",
-    "window_start_rel_ms",
-    "window_end_rel_ms",
-    "events"
+    "mouse_features",
+    "keystroke_features",
+    "scroll_features",
+    "feature_vector",
+    "meta"
   ],
   "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "Version of this schema contract."
+    },
     "session_id": {
       "type": "string",
-      "format": "uuid"
+      "format": "uuid",
+      "description": "Unique identifier for the user session."
     },
     "task_id": {
       "type": "string",
-      "format": "uuid"
+      "format": "uuid",
+      "description": "Identifier for the specific task being performed."
     },
     "window_idx": {
       "type": "integer",
-      "minimum": 0
+      "minimum": 0,
+      "description": "The sequential index of the time window within the task."
     },
-    "window_start_rel_ms": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "window_end_rel_ms": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "events": {
+    "mouse_features": {
       "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "mouse": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["t_rel_ms", "x", "y", "type"],
-            "properties": {
-              "t_rel_ms": { "type": "integer", "minimum": 0 },
-              "x": { "type": "integer", "minimum": 0 },
-              "y": { "type": "integer", "minimum": 0 },
-              "type": {
-                "type": "string",
-                "enum": ["move", "down", "up"]
-              },
-              "button": {
-                "type": "integer",
-                "minimum": 0
-              }
-            }
-          }
-        },
-        "key": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["t_rel_ms", "key", "code", "action"],
-            "properties": {
-              "t_rel_ms": { "type": "integer", "minimum": 0 },
-              "key": { "type": "string", "minLength": 1 },
-              "code": { "type": "string", "minLength": 1 },
-              "action": {
-                "type": "string",
-                "enum": ["down", "up"]
-              }
-            }
-          }
-        },
-        "scroll": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["t_rel_ms", "deltaY"],
-            "properties": {
-              "t_rel_ms": { "type": "integer", "minimum": 0 },
-              "deltaY": { "type": "integer" }
-            }
-          }
-        }
-      },
-      "required": ["mouse", "key", "scroll"]
+      "description": "Mouse-derived features for the current window.",
+      "additionalProperties": { "type": "number" }
     },
-    "client": {
+    "keystroke_features": {
       "type": "object",
+      "description": "Keystroke-derived features for the current window.",
+      "additionalProperties": { "type": "number" }
+    },
+    "scroll_features": {
+      "type": "object",
+      "description": "Scroll-derived features for the current window.",
+      "additionalProperties": { "type": "number" }
+    },
+    "feature_vector": {
+      "type": "object",
+      "description": "Combined features (merged set) used as model input. Strict order is defined when feature set is finalized.",
+      "additionalProperties": { "type": "number" }
+    },
+    "meta": {
+      "type": "object",
+      "description": "Metadata used for version control and reproducibility.",
       "additionalProperties": false,
+      "required": ["extractor_version", "feature_set_version"],
       "properties": {
-        "user_agent": { "type": "string" },
-        "viewport": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["width", "height"],
-          "properties": {
-            "width": { "type": "integer", "minimum": 1 },
-            "height": { "type": "integer", "minimum": 1 }
-          }
-        },
-        "device_pixel_ratio": { "type": "number", "minimum": 0.1 }
+        "extractor_version": { "type": "string", "minLength": 1 },
+        "feature_set_version": { "type": "string", "minLength": 1 }
       }
     }
   }
